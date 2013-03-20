@@ -300,7 +300,8 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
                              completion:^(BOOL finished)
              {
                  [weakSelf setFrontViewController:frontViewController focusAfterChange:YES completion:^(BOOL finished) {
-                     completion(finished);
+                     if (completion)
+                         completion(finished);
                  }];
              }];
         }
