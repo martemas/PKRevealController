@@ -221,6 +221,17 @@ typedef void(^PKDefaultErrorHandler)(NSError *error);
                     completion:(PKDefaultCompletionHandler)completion;
 
 /**
+ * Exchanges the current front view controller for a new one for Left View Presentation Mode only. In the process, 
+ * it reveals the left view controller to maximum width, replaces the front view controller with the new one and 
+ * then moves the front view to the position that's best suited to present the desired controller's view.
+ *
+ * @param UIViewController frontViewController - The new front view controller.
+ * @param PKDefaultCompletionHandler completion - Executed on the main thread after the show animation is completed.
+ */
+- (void)setFrontViewControllerWithTransitionForLeftViewPresentationMode:(UIViewController *)frontViewController
+                                                             completion:(PKDefaultCompletionHandler)completion;
+
+/**
  * Exchanges the current left view controller for a new one.
  *
  * @param UIViewController leftViewController - Thew new left view controller.

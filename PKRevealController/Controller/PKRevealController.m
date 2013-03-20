@@ -259,6 +259,8 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
         
         [self addFrontViewControllerToHierarchy];
     }
+    
+    _frontViewController.view.frame = _frontViewContainer.bounds;
 }
 
 - (void)setFrontViewController:(UIViewController *)frontViewController
@@ -276,6 +278,32 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
     else
     {
         safelyExecuteCompletionBlockOnMainThread(completion, YES);
+    }
+}
+
+- (void)setFrontViewControllerWithTransitionForLeftViewPresentationMode:(UIViewController *)frontViewController
+                                                             completion:(PKDefaultCompletionHandler)completion
+{
+    if ([self isLeftViewVisible])
+    {
+        __weak PKRevealController *weakSelf = self;
+        
+        CGFloat duration = [self animationDuration];
+        UIViewAnimationOptions options = (UIViewAnimationOptionBeginFromCurrentState | [self animationCurve]);
+        
+        if (self.animationType == PKRevealControllerAnimationTypeStatic)
+        {
+            [UIView animateWithDuration:duration delay:0.0f options:options animations:^
+             {
+                 self.frontViewContainer.frame = [self frontViewFrameForLeftViewPresentationMode];
+             }
+                             completion:^(BOOL finished)
+             {
+                 [weakSelf setFrontViewController:frontViewController focusAfterChange:YES completion:^(BOOL finished) {
+                     completion(finished);
+                 }];
+             }];
+        }
     }
 }
 
