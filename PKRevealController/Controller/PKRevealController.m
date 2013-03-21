@@ -297,10 +297,10 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
              {
                  self.frontViewContainer.frame = [self frontViewFrameForLeftViewPresentationMode];
              }
-                             completion:^(BOOL finished)
+             completion:^(BOOL finished)
              {
                  [weakSelf setFrontViewController:frontViewController focusAfterChange:YES completion:^(BOOL finished) {
-                     completion(finished);
+                     safelyExecuteCompletionBlockOnMainThread(completion, finished);
                  }];
              }];
         }
